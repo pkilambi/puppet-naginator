@@ -11,8 +11,8 @@ class naginator {
   case $::osfamily {
    'redhat': {
         $service_name      = 'nagios'
-	$package_name      = 'nagios'
-	$package_name_list = [ "nagios", "nagios-plugins-nrpe", "nagios-plugins", ]
+        $package_name      = 'nagios'
+        $package_name_list = [ "nagios", "nagios-plugins-nrpe", "nagios-plugins", ]
         $cfg_files         = [ "/etc/nagios/conf.d/nagios_command.cfg",
                                "/etc/nagios/conf.d/nagios_host.cfg",
                                "/etc/nagios/conf.d/nagios_hostextinfo.cfg",
