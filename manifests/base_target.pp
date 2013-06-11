@@ -12,7 +12,7 @@ class naginator::base_target {
         alias   => $hostname,
         address => $ipaddress,
         use     => "generic-host",
-        notify  => Service[$naginator::service_name],
+        notify  => Service[$naginator::params::service_name],
     }
 
     @@nagios_hostextinfo { $fqdn:
