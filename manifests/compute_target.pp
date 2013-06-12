@@ -4,6 +4,8 @@
 
 class naginator::compute_target {
 
+    include naginator::params
+
     class { "naginator::common_target":
     }
 
@@ -22,13 +24,13 @@ class naginator::compute_target {
     }
 
     file { "check_vm":
-        name    => "/usr/lib/nagios/plugins/check_vm",
+        name    => "${::naginator::params::plugin_dir}/check_vm",
         source  => 'puppet:///modules/naginator/check_vm',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
 }

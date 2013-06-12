@@ -4,6 +4,8 @@
 
 class naginator::control_target {
 
+    include naginator::params
+
     class { "naginator::common_target":
     }
 
@@ -30,13 +32,13 @@ class naginator::control_target {
     }
 
     file { "check_glance":
-        name    => "/usr/lib/nagios/plugins/check_glance",
+        name    => "${::naginator::params::plugin_dir}/check_glance",
         source  => 'puppet:///modules/naginator/check_glance',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     #
@@ -55,13 +57,13 @@ class naginator::control_target {
     }
 
     file { "check_keystone":
-        name    => "/usr/lib/nagios/plugins/check_keystone",
+        name    => "${::naginator::params::plugin_dir}/check_keystone",
         source  => 'puppet:///modules/naginator/check_keystone',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     #
@@ -80,13 +82,13 @@ class naginator::control_target {
     }
 
     file { "check_novaapi":
-        name    => "/usr/lib/nagios/plugins/check_novaapi",
+        name    => "${::naginator::params::plugin_dir}/check_novaapi",
         source  => 'puppet:///modules/naginator/check_novaapi',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     #
@@ -111,13 +113,13 @@ class naginator::control_target {
     }
 
     file { "check_rabbitmq_aliveness":
-        name    => "/usr/lib/nagios/plugins/check_rabbitmq_aliveness",
+        name    => "${::naginator::params::plugin_dir}/check_rabbitmq_aliveness",
         source  => 'puppet:///modules/naginator/check_rabbitmq_aliveness',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     @@nagios_service { "check_rabbitmq_objects_${hostname}":
@@ -132,13 +134,13 @@ class naginator::control_target {
     }
 
     file { "check_rabbitmq_objects":
-        name    => "/usr/lib/nagios/plugins/check_rabbitmq_objects",
+        name    => "${::naginator::params::plugin_dir}/check_rabbitmq_objects",
         source  => 'puppet:///modules/naginator/check_rabbitmq_objects',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     @@nagios_service { "check_rabbitmq_overview_${hostname}":
@@ -153,13 +155,13 @@ class naginator::control_target {
     }
 
     file { "check_rabbitmq_overview":
-        name    => "/usr/lib/nagios/plugins/check_rabbitmq_overview",
+        name    => "${::naginator::params::plugin_dir}/check_rabbitmq_overview",
         source  => 'puppet:///modules/naginator/check_rabbitmq_overview',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     @@nagios_service { "check_rabbitmq_server_${hostname}":
@@ -174,13 +176,13 @@ class naginator::control_target {
     }
 
     file { "check_rabbitmq_server":
-        name    => "/usr/lib/nagios/plugins/check_rabbitmq_server",
+        name    => "${::naginator::params::plugin_dir}/check_rabbitmq_server",
         source  => 'puppet:///modules/naginator/check_rabbitmq_server',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     @@nagios_service { "check_rabbitmq_watermark_${hostname}":
@@ -195,34 +197,34 @@ class naginator::control_target {
     }
 
     file { "check_rabbitmq_watermark":
-        name    => "/usr/lib/nagios/plugins/check_rabbitmq_watermark",
+        name    => "${::naginator::params::plugin_dir}/check_rabbitmq_watermark",
         source  => 'puppet:///modules/naginator/check_rabbitmq_watermark',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     #
     # installed but not configured - useful if you need to monitor
     # a specific RabbitMQ queue but not of general default interest
     file { "check_rabbitmq_queue":
-        name    => "/usr/lib/nagios/plugins/check_rabbitmq_queue",
+        name    => "${::naginator::params::plugin_dir}/check_rabbitmq_queue",
         source  => 'puppet:///modules/naginator/check_rabbitmq_queue',
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-plugins"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nagios_plugin],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     #
     # perl modules required by the RabbitMQ monitoring scripts
-    package { [ "libnagios-plugin-perl", "libwww-perl", "libjson-perl", ]:
+    package { $::naginator::params::perl_pkg_list:
         ensure  => installed,
-        require => Package["nagios-nrpe-server"],
-        notify  => Service["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nrpe_package],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
 }

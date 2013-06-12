@@ -4,16 +4,18 @@
 
 class naginator::nrpe::server( $allowed_hosts = ['127.0.0.1'], ) {
 
-    package { [ "nagios-nrpe-server", "nagios-plugins", ]:
+    include naginator::params
+
+    package { [ $::naginator::params::nrpe_package, $::naginator::params::nagios_plugin ]:
         ensure => installed,
     }
 
-    service { "nagios-nrpe-server":
+    service { $::naginator::params::nrpe_service:
         ensure     => running,
         enable     => true,
         hasstatus  => true,
         hasrestart => true,
-        require    => Package["nagios-nrpe-server"],
+        require    => Package[$::naginator::params::nrpe_package],
         subscribe  => File["nrpe_config"],
     }
 
@@ -24,7 +26,7 @@ class naginator::nrpe::server( $allowed_hosts = ['127.0.0.1'], ) {
         owner   => root,
         group   => root,
         require => File["nrpe_config_dir"],
-        notify  => Service["nagios-nrpe-server"],
+        notify  => Service[$::naginator::params::nrpe_service],
     }
 
     file { "nrpe_config_dir":
@@ -33,7 +35,7 @@ class naginator::nrpe::server( $allowed_hosts = ['127.0.0.1'], ) {
         mode    => 0755,
         owner   => root,
         group   => root,
-        require => Package["nagios-nrpe-server"],
+        require => Package[$::naginator::params::nrpe_package],
     }
 
 }

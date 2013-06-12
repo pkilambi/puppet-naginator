@@ -5,12 +5,14 @@
 
 class naginator::base_target {
 
+    include naginator::params
+
     @@nagios_host { $fqdn:
         ensure  => present,
         alias   => $hostname,
         address => $ipaddress,
         use     => "generic-host",
-        notify  => Service["nagios3"],
+        notify  => Service[$naginator::params::service_name],
     }
 
     @@nagios_hostextinfo { $fqdn:
