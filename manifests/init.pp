@@ -11,22 +11,29 @@ class naginator {
  
   include naginator::params
 
-    package { $::naginator::params::package_name_list:
+    package { "package_name_list":
+        name   => $::naginator::params::package_name_list,
         ensure => installed,
     }
 
-    service { $::naginator::params::service_name:
+    service { "nagios_service":
+        name       => $::naginator::params::service_name,
         ensure     => running,
         enable     => true,
         hasstatus  => true,
         hasrestart => true,
-        require    => Package[$::naginator::params::package_name_list ],
+        require    => Package["package_name_list"],
     }
+
+    package { "nagios_package":
+        name    => $::naginator::params::package_name,
+        ensure  => installed,
+    }      
 
     #
     # workaround for Debian packaging / Puppet design decision
     # regarding resource management in "non-standard" locations
-     if $osfamily == 'debian' {
+     if $::osfamily == 'debian' {
         file { "/etc/nagios":
             ensure => link,
             target => "/etc/nagios3/conf.d",
@@ -34,11 +41,11 @@ class naginator {
     }
 
     Nagios_host <<| |>> {
-        notify => Service[ $::naginator::params::service_name ],
+        notify => Service[ "nagios_service" ],
     }
 
     Nagios_service <<| |>> {
-        notify => Service[ $::naginator::params::service_name ],
+        notify => Service[ "nagios_service" ],
     }
 
     Nagios_hostextinfo <<| |>>
@@ -49,8 +56,8 @@ class naginator {
         owner   => root,
         group   => root,
         replace => false,
-        notify  => Service[$::naginator::params::service_name],
-        require => Package[$::naginator::params::package_name],
+        notify  => Service["nagios_service"],
+        require => Package["nagios_package"],
     }
 
     file { $::naginator::params::nagios_users:
@@ -58,8 +65,8 @@ class naginator {
         mode    => 0644,
         owner   => root,
         group   => root,
-        source  => 'puppet:///modules/naginator/htpasswd.users',
-        require => Package[$::naginator::params::package_name],
+        source  => $::naginator::params::passwd_path,
+        require => Package["nagios_package"],
     }
 
     file { $::naginator::params::cgi_cfg:
@@ -67,8 +74,8 @@ class naginator {
         mode    => 0644,
         owner   => root,
         group   => root,
-        source  => 'puppet:///modules/naginator/cgi.cfg',
-        require => Package[$::naginator::params::package_name],
+        source  => $::naginator::params::cgi_file_path,
+        require => Package["nagios_package"],
     }
 
 }

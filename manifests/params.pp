@@ -12,8 +12,10 @@ class naginator::params {
                                "/etc/nagios/conf.d/nagios_host.cfg",
                                "/etc/nagios/conf.d/nagios_hostextinfo.cfg",
                                "/etc/nagios/conf.d/nagios_service.cfg", ]
-        $nagios_users      = '/etc/nagios/htpasswd.users'
+        $nagios_users      = '/etc/nagios/passwd'
+        $passwd_path       = 'puppet:///modules/naginator/rhel/passwd'
         $cgi_cfg           = '/etc/nagios/cgi.cfg'
+        $cgi_file_path     = 'puppet:///modules/naginator/rhel/cgi.cfg'
         $perl_pkg_list     = ["nagios-plugins-perl", "perl-libwww-perl",]
         $nrpe_dir          = "/etc/nrpe.d"
         $plugin_dir        = "/usr/lib64/nagios/plugins"
@@ -31,7 +33,9 @@ class naginator::params {
                                "/etc/nagios3/conf.d/nagios_hostextinfo.cfg",
                                "/etc/nagios3/conf.d/nagios_service.cfg", ]
         $nagios_users      = "/etc/nagios3/htpasswd.users"
+        $passwd_path       = 'puppet:///modules/naginator/ubuntu/htpasswd.users'
         $cgi_cfg           = '/etc/nagios3/cgi.cfg'
+        $cgi_file_path     = 'puppet:///modules/naginator/ubuntu/cgi.cfg'
         $perl_pkg_list     = [ "libnagios-plugin-perl", "libwww-perl", "libjson-perl", ] 
         $nrpe_dir          = "/etc/nagios/nrpe.d"
         $plugin_dir        = "/usr/lib/nagios/plugins"
