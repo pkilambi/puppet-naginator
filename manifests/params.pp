@@ -7,7 +7,7 @@ class naginator::params {
         $nrpe_package      = 'nrpe'
         $nrpe_service      = 'nrpe'
         $nagios_plugin     = "nagios-plugins"
-        $package_name_list = [ "nagios", "nagios-plugins-nrpe", "nagios-plugins", ]
+        $package_name_list = [ "nagios", "nagios-plugins-nrpe", "nagios-plugins", 'nagios-plugins-all', ]
         $cfg_files         = [ "/etc/nagios/conf.d/nagios_command.cfg",
                                "/etc/nagios/conf.d/nagios_host.cfg",
                                "/etc/nagios/conf.d/nagios_hostextinfo.cfg",
