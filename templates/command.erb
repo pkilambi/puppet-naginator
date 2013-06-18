@@ -1,1 +1,5 @@
+<% if (@osfamily == "Debian") || (@architecture =~ /(i[3456]86|pentium)/) %>
 command[<%=name%>]=/usr/lib/nagios/plugins/<%=command%>
+<% else %>
+command[<%=name%>]=/usr/lib64/nagios/plugins/<%=command%>
+<% end %>
