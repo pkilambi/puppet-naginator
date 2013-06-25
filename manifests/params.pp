@@ -1,14 +1,14 @@
 class naginator::params {
 
  case $::osfamily {
-   'redhat': {
+   'Redhat': {
         $service_name      = 'nagios'
         $package_name      = 'nagios'
         $nrpe_package      = 'nrpe'
         $nrpe_service      = 'nrpe'
-        $nagios_plugin     = "nagios-plugins"
+        $nagios_plugin     = "nagios-plugins-all"
         $package_name_list = [ "nagios", "nagios-plugins-nrpe", "nagios-plugins", 'nagios-plugins-all', ]
-        $cfg_files         = [ "/etc/nagios/conf.d/nagios_command.cfg",
+        $cfg_files         = [ 
                                "/etc/nagios/conf.d/nagios_host.cfg",
                                "/etc/nagios/conf.d/nagios_hostextinfo.cfg",
                                "/etc/nagios/conf.d/nagios_service.cfg", ]
@@ -17,10 +17,10 @@ class naginator::params {
         $cgi_cfg           = '/etc/nagios/cgi.cfg'
         $cgi_file_path     = 'puppet:///modules/naginator/rhel/cgi.cfg'
         $perl_pkg_list     = ["nagios-plugins-perl", "perl-libwww-perl",]
-        $nrpe_dir          = "/etc/nrpe.d"
+        $nrpe_dir          = "/etc/nagios/nrpe.d"
         $plugin_dir        = "/usr/lib64/nagios/plugins"
    }
-   'debian': {
+   'Debian': {
         $service_name      = 'nagios3'
         $package_name      = 'nagios3'
         $nrpe_package      = 'nagios-nrpe-server'
