@@ -30,7 +30,7 @@ class naginator::nrpe::server( $allowed_hosts = ['127.0.0.1'], ) {
     }
 
     file { "nrpe_config_dir":
-        name    => "/etc/nagios/nrpe.d/",
+        name    => $::naginator::params::nrpe_conf_dir,
         ensure  => directory,
         mode    => 0755,
         owner   => root,

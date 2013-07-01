@@ -42,17 +42,17 @@ class naginator {
 
     Nagios_host <<| |>> {
         max_check_attempts => "9",
-        target  => "/etc/nagios/conf.d/nagios_host.cfg",
+        target  => $::naginator::params::nagios_host_cfg,
         notify => Service[ "nagios_service" ],
     }
 
     Nagios_service <<| |>> {
-        target  => "/etc/nagios/conf.d/nagios_service.cfg",
+        target  => $::naginator::params::nagios_service_cfg,
         notify => Service[ "nagios_service" ],
     }
 
     Nagios_hostextinfo <<| |>> {
-        target  => "/etc/nagios/conf.d/nagios_hostextinfo.cfg",
+        target  => $::naginator::params::nagios_hostextinfo_cfg,
     }
 
     if ($::osfamily == 'Redhat') {

@@ -19,6 +19,10 @@ class naginator::params {
         $perl_pkg_list     = ["nagios-plugins-perl", "perl-libwww-perl",]
         $nrpe_dir          = "/etc/nagios/nrpe.d"
         $plugin_dir        = "/usr/lib64/nagios/plugins"
+        $nrpe_conf_dir     = "/etc/nagios/nrpe.d" 
+        $nagios_host_cfg   = "/etc/nagios/conf.d/nagios_host.cfg"
+        $nagios_hostextinfo_cfg = "/etc/nagios/conf.d/nagios_hostextinfo.cfg"
+        $nagios_service_cfg     = "/etc/nagios/conf.d/nagios_service.cfg"
    }
    'Debian': {
         $service_name      = 'nagios3'
@@ -37,8 +41,12 @@ class naginator::params {
         $cgi_cfg           = '/etc/nagios3/cgi.cfg'
         $cgi_file_path     = 'puppet:///modules/naginator/ubuntu/cgi.cfg'
         $perl_pkg_list     = [ "libnagios-plugin-perl", "libwww-perl", "libjson-perl", ] 
-        $nrpe_dir          = "/etc/nagios/nrpe.d"
+        $nrpe_dir          = "/etc/nagios3/nrpe.d"
         $plugin_dir        = "/usr/lib/nagios/plugins"
+        $nrpe_conf_dir     = "/etc/nagios3/" 
+        $nagios_host_cfg   = "/etc/nagios3/conf.d/nagios_host.cfg"
+        $nagios_hostextinfo_cfg = "/etc/nagios3/conf.d/nagios_hostextinfo.cfg"
+        $nagios_service_cfg     = "/etc/nagios3/conf.d/nagios_service.cfg"
    }
     default: {
         fail("unsupported osfamily: $::osfamily")
