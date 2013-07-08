@@ -93,4 +93,8 @@ class naginator {
         require => Package["nagios_package"],
     }
 
+    file { $::naginator::params::nagios_apache:
+         ensure => link,
+         target => $::naginator::params::nagios_apache,
+    }
 }

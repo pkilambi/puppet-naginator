@@ -23,6 +23,7 @@ class naginator::params {
         $nagios_host_cfg   = "/etc/nagios/conf.d/nagios_host.cfg"
         $nagios_hostextinfo_cfg = "/etc/nagios/conf.d/nagios_hostextinfo.cfg"
         $nagios_service_cfg     = "/etc/nagios/conf.d/nagios_service.cfg"
+        $nagios_apache     = '/etc/httpd/conf.d/nagios.conf'
    }
    'Debian': {
         $service_name      = 'nagios3'
@@ -47,6 +48,7 @@ class naginator::params {
         $nagios_host_cfg   = "/etc/nagios3/conf.d/nagios_host.cfg"
         $nagios_hostextinfo_cfg = "/etc/nagios3/conf.d/nagios_hostextinfo.cfg"
         $nagios_service_cfg     = "/etc/nagios3/conf.d/nagios_service.cfg"
+        $nagios_apache     = '/etc/apache2/conf.d/nagios3.conf'
    }
     default: {
         fail("unsupported osfamily: $::osfamily")
