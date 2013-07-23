@@ -62,6 +62,7 @@ class naginator {
             mode => 644,
             owner => nagios, group => nagios,
             notify => Service["nagios_service"],
+            require => Package["nagios_package"],
         }
     }
 
