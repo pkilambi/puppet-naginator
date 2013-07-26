@@ -8,7 +8,7 @@
 #
 
 class naginator {
- 
+  include apache::mod::php
   include naginator::params
 
     package { "package_name_list":
